@@ -1,4 +1,4 @@
-class FailureApp < Devise::FailureApp
+class CustomFailureApp < Devise::FailureApp
   def http_auth_body
     return super unless request_format == :json
 

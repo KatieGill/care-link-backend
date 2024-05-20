@@ -18,6 +18,6 @@ class CurrentUserController < ApplicationController
 
   private
   def current_user_params
-    params.require(:current_user).permit(:emial, :username, :first_name, :last_name, :zip_code, :role, :display_picture, :number_of_children, :years_experience, :pay, :bio)
+    params.require(:current_user).permit(:email, :username, :first_name, :last_name, :zip_code, :role, :display_picture, :number_of_children, :years_experience, :pay, :bio)
   end
 end
