@@ -3,8 +3,11 @@ class CustomFailureApp < Devise::FailureApp
     return super unless request_format == :json
 
     {
-      sucess: false,
-      message: i18n_message
+      status: {
+        success: false,
+        message: i18n_message
+      }
     }.to_json
+
   end
 end

@@ -1,10 +1,16 @@
 class CurrentUserController < ApplicationController
   before_action :authenticate_user!
   def index
+    if current_user
     render json: {
       status: { code: 200, message: 'Success'},
       data: UserSerializer.new(current_user).serializable_hash[:data][:attributes]
     }
+    else 
+    render json: {
+      status: { code: 401, message: "#{current_user.errors.full_messages.to_sentence}"}
+    }
+    end
   end
 
   def update
@@ -12,6 +18,10 @@ class CurrentUserController < ApplicationController
       render json: {
         status: { code: 200, message: 'Success'},
         data: UserSerializer.new(current_user).serializable_hash[:data][:attributes]
+    }
+    else 
+    render json: {
+      status: { code: 401, message: "#{current_user.errors.full_messages.to_sentence}"}
     }
     end
   end

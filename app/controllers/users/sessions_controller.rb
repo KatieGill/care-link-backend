@@ -12,14 +12,8 @@ class Users::SessionsController < Devise::SessionsController
       status: { code: 200, message: 'Logged in successfully.'},
       data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
     }
-    else 
-      render json: {
-        status: {code: 422, message: "User could not be logged in successfully. #{resource.errors.full_messages.to_sentence}"}, 
-      }, status: :unprocessable_entity 
-    end
-    
-    
-  end
+  end    
+end
 
   # def respond_to_on_destroy
   #   if request.headers['Authorization'].present?
