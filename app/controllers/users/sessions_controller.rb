@@ -8,9 +8,15 @@ class Users::SessionsController < Devise::SessionsController
   
   def respond_with(resource, _opts = {})
     if current_user
+      if current_user.image.attached?
+      userData = current_user.as_json.merge(image_url: url_for(current_user.image))
+      else
+        userData = current_user.as_json
+      end
       render json: {
       status: { code: 200, message: 'Logged in successfully.'},
-      data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
+      data: userData
+      # data: UserSerializer.new(userData).serializable_hash[:data][:attributes]
     }
   end    
 end

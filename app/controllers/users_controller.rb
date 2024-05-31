@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   def role
     @users = User.where(role: "#{params[:role]}")
     data = @users.each do |user|
-      UserSerializer.new(user).serializable_hash[:data][:attributes]
+      UserSerializer.new(user).serializable_hash
     end
     if !data.empty?
     render json: {
