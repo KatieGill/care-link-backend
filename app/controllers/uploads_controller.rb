@@ -4,7 +4,6 @@ class UploadsController < ApplicationController
        
         user_id = upload_params[:user_id]
         image = upload_params[:image]
-        puts "user id #{user_id} image #{uri_for(image)}"
     
         blob = ActiveStorage::Blob.create_and_upload!(
           io: image,

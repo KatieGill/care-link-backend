@@ -2,14 +2,9 @@ class UsersController < ApplicationController
   respond_to :json
   def role
     @users = User.where(role: "#{params[:role]}")
-    data = @users.each do |user|
-      UserSerializer.new(user).serializable_hash
-    end
-    if !data.empty?
-    render json: {
-      status: { code: 200, message: 'Success'},
-      data: data
-    }
+
+    if @users
+    render json: @users, except: [:created_at, :updated_at, :jti], methods: [:image_url]
   
     else
     render json: {
