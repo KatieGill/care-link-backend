@@ -12,9 +12,9 @@ class CurrentUserController < ApplicationController
 
   def update
     if current_user.update(current_user_params)
-      if current_user.image.attached?
-        render json: current_user, except: [:created_at, :updated_at, :jti], methods: [:image_url]
-      end
+      
+      render json: current_user, except: [:created_at, :updated_at, :jti], methods: [:image_url]
+    
     else 
       render json: {
         status: { code: 401, message: "#{current_user.errors.full_messages.to_sentence}"}

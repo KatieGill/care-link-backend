@@ -12,9 +12,14 @@ class UploadsController < ApplicationController
         )
     
         if user_id.present?
-        user = User.find(user_id)
-        user.image.attach(blob.signed_id)
+          user = User.find(user_id)
+          user.image.attach(blob.signed_id)
         end
+
+        render json:  {
+          data: { image: blob.signed_id},
+          status: {code: 200, message: 'Success'}
+        }
 
       end
 
