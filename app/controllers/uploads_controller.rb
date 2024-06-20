@@ -1,7 +1,6 @@
 class UploadsController < ApplicationController
     def create
-        puts "params #{params} upload_params #{upload_params}"
-       
+        
         user_id = upload_params[:user_id]
         image = upload_params[:image]
     

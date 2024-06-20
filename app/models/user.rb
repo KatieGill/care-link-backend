@@ -17,4 +17,12 @@ class User < ApplicationRecord
       nil
     end
   end
+
+  def links 
+    liked_user_ids = Like.where(user_id: self.id).map(&:liked_user_id)
+    likes_me_user_ids = Like.where(liked_user_id: self.id).map(&:user_id)
+
+    linked_ids = liked_user_ids.select{|id| likes_me_user_ids.include?(id)}
+    linked_users = User.where(id: linked_ids)
+  end
 end

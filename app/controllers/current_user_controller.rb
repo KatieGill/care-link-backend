@@ -22,6 +22,20 @@ class CurrentUserController < ApplicationController
     end
   end
 
+  def links
+    @links = current_user.links
+
+    if @links
+      render json: @links, except: [:created_at, :updated_at, :jti], methods: [:image_url]
+    
+      else
+      render json: {
+        status: 404,
+        error: "Links not found"
+      }
+      end
+  end
+
   private
   def current_user_params
     params.require(:current_user).permit(:email, :username, :first_name, :last_name, :zip_code, :role, :image, :number_of_children, :years_experience, :pay, :bio)
