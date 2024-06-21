@@ -25,4 +25,8 @@ class User < ApplicationRecord
     linked_ids = liked_user_ids.select{|id| likes_me_user_ids.include?(id)}
     linked_users = User.where(id: linked_ids)
   end
+
+  def number_of_links
+    self.links.count
+  end
 end

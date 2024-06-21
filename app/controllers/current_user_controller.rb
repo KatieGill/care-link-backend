@@ -2,7 +2,7 @@ class CurrentUserController < ApplicationController
   before_action :authenticate_user!
   def index
     if current_user
-      render json: current_user, except: [:created_at, :updated_at, :jti], methods: [:image_url]
+      render json: current_user, except: [:created_at, :updated_at, :jti], methods: [:image_url, :number_of_links]
     else 
       render json: {
         status: { code: 401, message: "#{current_user.errors.full_messages.to_sentence}"}
@@ -13,7 +13,7 @@ class CurrentUserController < ApplicationController
   def update
     if current_user.update(current_user_params)
       
-      render json: current_user, except: [:created_at, :updated_at, :jti], methods: [:image_url]
+      render json: current_user, except: [:created_at, :updated_at, :jti], methods: [:image_url, :number_of_links]
     
     else 
       render json: {
@@ -26,7 +26,7 @@ class CurrentUserController < ApplicationController
     @links = current_user.links
 
     if @links
-      render json: @links, except: [:created_at, :updated_at, :jti], methods: [:image_url]
+      render json: @links, except: [:created_at, :updated_at, :jti], methods: [:image_url, :number_of_links]
     
       else
       render json: {

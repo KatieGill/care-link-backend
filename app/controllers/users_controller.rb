@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     @users = User.where(role: "#{params[:role]}").where.not(id: liked_user_ids).where.not(id: disliked_user_ids)
 
     if @users
-    render json: @users, except: [:created_at, :updated_at, :jti], methods: [:image_url]
+    render json: @users, except: [:created_at, :updated_at, :jti], methods: [:image_url, :number_of_links]
   
     else
     render json: {
@@ -25,17 +25,24 @@ class UsersController < ApplicationController
     new_like.user_id = current_user.id
 
     if new_like.save
-      # existing_like = Like.where(user_id: user_id, liked_user_id: current_user.id).count
-      # @they_like_use = existing_like > 0
+      existing_like = Like.where(user_id: user_id, liked_user_id: current_user.id).count
+      @they_like_us = existing_like > 0
+
+      if @they_like_us
       render json: {
         status: 200,
-        message: "You liked this user"
-      
+        message: "You have a new link!"
       }
+      else 
+        render json: {
+          status: 200,
+          message: "Requested link with user"
+        }
+      end
     else
       render json: {
         status: 404,
-        error: "Unable to like user"
+        error: "Unable to request link"
       }
     end
   end
@@ -48,12 +55,12 @@ class UsersController < ApplicationController
     if new_dislike.save 
       render json: {
         status: 200,
-        message: "You disliked this user"
+        message: "Delined link with user"
       }
     else
       render json: {
         status: 404,
-        error: "Unable to dislike user"
+        error: "Unable to decline link"
       }
     end
   

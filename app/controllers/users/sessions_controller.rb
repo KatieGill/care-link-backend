@@ -8,7 +8,7 @@ class Users::SessionsController < Devise::SessionsController
   
   def respond_with(resource, _opts = {})
     if current_user
-      render json: current_user, except: [:created_at, :updated_at, :jti], methods: [:image_url]
+      render json: current_user, except: [:created_at, :updated_at, :jti], methods: [:image_url, :number_of_links]
       # if current_user.image.attached?
       # userData = current_user.as_json.merge(image_url: url_for(current_user.image))
       # else
